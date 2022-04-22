@@ -1,7 +1,7 @@
 # graphql-catalogue-querier
 
-![Application](https://img.shields.io/badge/version-v16.13.2-blue?logo=Node.js)
-![Application](https://img.shields.io/badge/version-v8.1.2-blue?logo=npm)
+![Node Version](https://img.shields.io/badge/node-v16.13.2-blue?logo=Node.js)
+![NPM Version](https://img.shields.io/badge/npm-v8.1.2-blue?logo=npm)
 
 ###### Note this project is very early in development so a lot of this could change.
 
@@ -54,9 +54,14 @@ what functions can be ran using this feature, along with an image to show what a
 | contains | Checks a specified field in each item and checks if it exists. | field, contains |
 | matchFieldValue | Checks if a field is equal to a specified value | field, value |
 
+### Development ![Trello](https://img.shields.io/badge/trello-active-active?logo=Trello)
+Trello was used to help manage the creation of this project. [Check out the Board](https://trello.com/invite/b/LC6ChGmH/3d20872210f1f1bd6d93bb0de65fb0cd/graphql-catalogue-querier)
+
 ### Testing
 
 ### Running
+Currently you need to download a v2 catalogue and put it in the root path folder at path `data/v2Cat.json`. This is something that will not be needed in the future.
+
 `npm start`
 
 ### Deploying

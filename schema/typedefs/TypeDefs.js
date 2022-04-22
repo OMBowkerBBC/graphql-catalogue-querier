@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server-express');
+const { gql } = require('apollo-server-express')
 
 const typeDefs = gql`
     type Synopses {
@@ -139,17 +139,6 @@ const typeDefs = gql`
         getAllSeries: [Series]
         getAllBrands: [Brand]
     }
-`;
+`
 
-module.exports = { typeDefs };
-
-// input NewUserInput {
-//     name: String!
-//     age: Int!
-//     married: Boolean!
-// }
-
-// type Mutation {
-//     createUser(input: NewUserInput): User!
-//     deleteUser(name: String!): Boolean!
-// }
+module.exports = { typeDefs }
