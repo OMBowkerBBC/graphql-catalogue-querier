@@ -1,5 +1,5 @@
 const containsField = (item, [field, contains]) => {
-  if (contains.toLowerCase() !== 'false' && contains.toLowerCase() !== 'true') return false
+  if (typeof (contains) !== 'string' || (contains.toLowerCase() !== 'false' && contains.toLowerCase() !== 'true')) return false
   return !!item[field] === JSON.parse(contains)
 }
 
@@ -33,4 +33,4 @@ const queryResolver = (data, queries, amount) => {
   return returnArray
 }
 
-module.exports = { queryResolver }
+module.exports = { queryResolver, queryMapper, containsField, matchFieldValue }

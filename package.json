@@ -4,7 +4,8 @@
   "description": "GraphQL and querying 'language' for BBC catalogues.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "test": "jest --colors"
   },
   "keywords": [],
   "author": "Oliver Bowker",
