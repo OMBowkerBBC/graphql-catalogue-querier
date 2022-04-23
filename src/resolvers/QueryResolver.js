@@ -14,6 +14,8 @@ const queryMapper = (queryFunction) => {
       return containsField
     case 'matchfieldvalue':
       return matchFieldValue
+    default:
+      return () => false
   }
 }
 
