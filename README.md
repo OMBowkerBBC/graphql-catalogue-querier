@@ -13,7 +13,7 @@ May also be useful when creating stub data for tests.
 ![Application](https://img.shields.io/badge/app-in%20dev-green?logo=Apollo%20GraphQL)
 &ndash; [Appollo GraphQL](https://www.apollographql.com/) and JavaScript will be used to create the main application and querying language.
 
-![Testing](https://img.shields.io/badge/testing-soon-orange?logo=Jest)
+![Testing](https://img.shields.io/badge/testing-in%20dev-green?logo=Jest)
 &ndash; [Jest](https://jestjs.io/) will be used to test the Apollo GraphQL app.
 
 ![Infrastructure](https://img.shields.io/badge/infrastructure-soon-orange?logo=Terraform)
@@ -58,6 +58,7 @@ what functions can be ran using this feature, along with an image to show what a
 Trello was used to help manage the creation of this project. [Check out the Board](https://trello.com/invite/b/LC6ChGmH/3d20872210f1f1bd6d93bb0de65fb0cd/graphql-catalogue-querier)
 
 ### Testing
+`npm test`
 
 ### Running
 Currently you need to download a v2 catalogue and put it in the root path folder at path `data/v2Cat.json`. This is something that will not be needed in the future.

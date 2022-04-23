@@ -1,0 +1,17 @@
+{
+    "episode": {
+        "pid": "m0010zwd",
+        "type": "episode",
+        "title": "Detling 17"
+    },
+    "series": {
+        "pid": "b00xg71j",
+        "type": "series",
+        "title": "Series 2"
+    },
+    "brand": {
+        "pid": "p0b5vt7f",
+        "type": "brand",
+        "title": "Pretty Little Liars: Ravenswood"
+    }
+}
