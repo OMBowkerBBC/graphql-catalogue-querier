@@ -4,8 +4,12 @@
   "description": "GraphQL and querying 'language' for BBC catalogues.",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
-    "test": "jest --colors"
+    "start": "node index.js",
+    "start:dev": "nodemon index.js",
+    "test": "jest --colors",
+    "infrastructure:build": "cd deploy/ && terraform apply && cd ../",
+    "infrastructure:rebuild": "cd deploy/ && rm ec2key.pem && terraform apply && cd ../",
+    "infrastructure:teardown": "cd deploy/ && rm ec2key.pem && terraform destroy && cd ../"
   },
   "keywords": [],
   "author": "Oliver Bowker",

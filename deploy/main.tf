@@ -28,6 +28,17 @@ resource "aws_security_group" "main" {
      security_groups  = []
      self             = false
      to_port          = 22
+  },
+     {
+     cidr_blocks      = [ "0.0.0.0/0", ]
+     description      = ""
+     from_port        = 3001
+     ipv6_cidr_blocks = []
+     prefix_list_ids  = []
+     protocol         = "tcp"
+     security_groups  = []
+     self             = false
+     to_port          = 3001
   }
   ]
 }
@@ -44,7 +55,7 @@ resource "aws_key_pair" "key_pair" {
   provisioner "local-exec" {
     command = <<-EOT
       echo '${tls_private_key.ssh_key.private_key_pem}' > ./ec2key.pem
-      chmod 400 ./ec2key.pem
+      chmod 700 ./ec2key.pem
     EOT
   }
 }
@@ -57,9 +68,15 @@ resource "aws_instance" "test_instance" {
   instance_type = "t2.micro"
   key_name = aws_key_pair.key_pair.key_name
   vpc_security_group_ids = [aws_security_group.main.id]
+  user_data = "${file("init.sh")}"
 }
 
-output "ec2_address" {
-  description = "EC2 SSH address"
+output "ec2_ssh_address" {
+  description = "EC2 SSH Address"
   value = "ubuntu@${aws_instance.test_instance.public_dns}"
+}
+
+output "ec2_grpahql_endpoint" {
+  description = "GraphQL Web Endpoint"
+  value = "http://${aws_instance.test_instance.public_dns}:3001/graphql"
 }
