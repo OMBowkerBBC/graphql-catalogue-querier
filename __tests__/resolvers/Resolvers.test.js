@@ -1,22 +1,36 @@
-
 const { resolvers } = require('../../src/resolvers/Resolvers')
+jest.mock('../../src/resolvers/QueryResolver')
+const QueryResolver = require('../../src/resolvers/QueryResolver')
 
 describe('Resolvers test suite', () => {
-  describe('CatalogueItem', () => {
-    const stubData = require('./stubs/catalogueItem.json')
-    it.each(['Episode', 'Series', 'Brand'])('should return correct object type for %s', (type) => {
-      expect(resolvers.CatalogueItem.__resolveType(stubData[type.toLowerCase()])).toEqual(type)
-    })
-  })
-
-  describe('EpisodeResult', () => {
+  describe('resolvers', () => {
     const errorObject = { error: 'An error has occurred.' }
-    it('should return an error object when an error has occurred', () => {
-      expect(resolvers.EpisodeResult.__resolveType(errorObject)).toEqual('EpisodeError')
+    const stubData = require('./stubs/catalogueItem.json')
+
+    describe('CatalogueItem', () => {
+      it.each(['Episode', 'Series', 'Brand'])('should return correct object type for %s', (type) => {
+        expect(resolvers.CatalogueItem.__resolveType(stubData[type.toLowerCase()])).toEqual(type)
+      })
     })
 
-    it('should return Episode object type when error field is not present', () => {
-      expect(resolvers.EpisodeResult.__resolveType({})).toEqual('Episode')
+    describe('EpisodeResult', () => {
+      it('should return an error object when an error has occurred', () => {
+        expect(resolvers.EpisodeResult.__resolveType(errorObject)).toEqual('EpisodeError')
+      })
+
+      it('should return Episode object type when error field is not present', () => {
+        expect(resolvers.EpisodeResult.__resolveType({})).toEqual('Episode')
+      })
+    })
+
+    describe('QueryResult', () => {
+      it('should return an error when an error object has occured', () => {
+        expect(resolvers.QueryResult.__resolveType(errorObject)).toEqual('CatalogueTypeError')
+      })
+
+      it.each(['Episode', 'Series', 'Brand'])('should return correct object type for %s', (type) => {
+        expect(resolvers.CatalogueItem.__resolveType(stubData[type.toLowerCase()])).toEqual(type)
+      })
     })
   })
 
@@ -79,6 +93,19 @@ describe('Resolvers test suite', () => {
         const result = resolvers.Query.getEpisodeSiblings('_', { pid: brandPid })
         expect(result.length).toBe(1)
         expect(result[0].error).toEqual(`Could not find an episode with pid ${brandPid}`)
+      })
+    })
+
+    describe('filterEpisodesQuery', () => {
+      it('should return an empty array when not given a valid type', () => {
+        const badType = 'invalid'
+        const result = resolvers.Query.filterEpisodesQuery('_', { queries: [], type: badType })
+        expect(result[0].error).toEqual(`Type '${badType}' is not valid`)
+      })
+
+      it.each(['episode', 'series', 'brand'])('should allow calling of queryResolver', (type) => {
+        resolvers.Query.filterEpisodesQuery('_', { queries: [], type, amount: 1 })
+        expect(QueryResolver.queryResolver).toHaveBeenCalled()
       })
     })
   })

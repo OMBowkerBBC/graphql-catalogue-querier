@@ -127,8 +127,13 @@ const typeDefs = gql`
         error: String!
     }
 
+    type CatalogueTypeError {
+        error: String!
+    }
+
     union CatalogueItem = Episode | Series | Brand
     union EpisodeResult = Episode | EpisodeError
+    union QueryResult = Episode | Series | Brand | CatalogueTypeError
 
     input QueryParameter {
         queryFunction: String!
@@ -141,7 +146,7 @@ const typeDefs = gql`
         getEpisodeTreeForPid(pid: String!): EpisodeResult
         getEpisodeSiblings(pid: String!): [EpisodeResult]
 
-        filterEpisodesQuery(queries: [QueryParameter]!, type: String!, amount: Int): [Episode]
+        filterEpisodesQuery(queries: [QueryParameter]!, type: String!, amount: Int): [QueryResult]
     }
 `
 
