@@ -63,6 +63,22 @@ Trello was used to help manage the creation of this project. [Check out the Boar
 ### Running
 Currently you need to download a v2 catalogue and put it in the root path folder at path `data/v2Cat.json`. This is something that will not be needed in the future.
 
-`npm start`
+`npm start` or `npm run start:dev`
 
 ### Deploying
+Deployment is done using terraform and all files related are in the deploy folder.
+
+Make sure to run `terraform init` on a fresh clone in the deploy folder to install providers.
+
+AWS credentials are needed to deploy and can be specifed in `deploy/credentials`. An example file layout is shown below.
+
+```
+[default]
+aws_access_key_id=YOUR_ACCESS_KEY
+aws_secret_access_key=YOUR_SECRET_ACCESS_KEY
+```
+
+There are 3 commands associated with deployment.
+`npm run infrastructure:build` - Does a clean build of the infrastruture, should be done after a fresh pull.
+`npm run infrastructure:rebuild` - Removes old build key files and rebuilds.
+`npm run infrastructure:teardown` - Tearsdown all current infrastructure and remove old key files.
