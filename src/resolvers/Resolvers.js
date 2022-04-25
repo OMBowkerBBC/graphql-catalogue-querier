@@ -1,7 +1,8 @@
-const catalogue = require('../../data/v2Cat.json')
+const catalogue = process.env.ENVIRONMENT === 'DEV' ? require('../../data/v2FullCat.json') : require('../../data/v2Cat.json')
 const { queryResolver } = require('./QueryResolver')
 
 const pidErrorObject = (pid) => ({ error: `Could not find an episode with pid ${pid}` })
+const typeErrorObject = (type) => ([{ error: `Type '${type}' is not valid` }])
 
 const resolvers = {
   CatalogueItem: {
@@ -16,6 +17,15 @@ const resolvers = {
     __resolveType: obj => {
       if (obj.error) return 'EpisodeError'
       else return 'Episode'
+    }
+  },
+
+  QueryResult: {
+    __resolveType: obj => {
+      if (obj.error) return 'CatalogueTypeError'
+      else if (obj.type === 'episode') return 'Episode'
+      else if (obj.type === 'series') return 'Series'
+      else if (obj.type === 'brand') return 'Brand'
     }
   },
 
@@ -52,10 +62,7 @@ const resolvers = {
       return parentPid ? catalogue.episode.filter(item => item?.member_of?.pid === parentPid) : [episode]
     },
     filterEpisodesQuery (parent, { queries, type, amount = 1000000 }) {
-      if (!['episode', 'series', 'brand'].includes(type)) {
-        console.log(`Invalid type : ${type}\nMust be either episode, series or brand.`)
-        return []
-      }
+      if (!['episode', 'series', 'brand'].includes(type)) return typeErrorObject(type)
 
       switch (type) {
         case 'episode':

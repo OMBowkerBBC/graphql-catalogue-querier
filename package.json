@@ -4,8 +4,8 @@
   "description": "GraphQL and querying 'language' for BBC catalogues.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "start:dev": "nodemon index.js",
+    "start": "ENVIRONMENT=PROD node index.js",
+    "start:dev": "ENVIRONMENT=DEV nodemon index.js",
     "test": "jest --colors",
     "infrastructure:build": "cd deploy/ && terraform apply && cd ../",
     "infrastructure:rebuild": "cd deploy/ && rm ec2key.pem && terraform apply && cd ../",

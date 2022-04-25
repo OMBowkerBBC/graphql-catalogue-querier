@@ -63,7 +63,8 @@ Trello was used to help manage the creation of this project. [Check out the Boar
 ### Running
 Currently you need to download a v2 catalogue and put it in the root path folder at path `data/v2Cat.json`. This is something that will not be needed in the future.
 
-`npm start` or `npm run start:dev`
+`npm start` contains a placeholder catalogue with nothing in it (for now).
+`npm run start:dev` you need to download a v2 catalogue and put it in the file `./data/v2Cat.json`.
 
 ### Deploying
 Deployment is done using terraform and all files related are in the deploy folder.
