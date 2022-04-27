@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building app...'
+            }
+        }
+
+        stage('Run Local Tests') {
+            steps {
+                echo 'Running unit tests...'
+            }
+        }
+
+        stage('Terraform Deploy') {
+            steps {
+                echo 'Deploying app to AWS...'
+            }
+        }
+
+        stage('Health Check') {
+            steps {
+                echo 'Checking service availability...'
+            }
+        }
+    }
+}
