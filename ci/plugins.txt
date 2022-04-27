@@ -11,3 +11,5 @@ ssh-slaves:latest
 timestamper:latest
 workflow-aggregator:latest
 ws-cleanup:latest
+nodejs:latest
+terraform:latest
