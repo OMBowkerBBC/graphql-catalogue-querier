@@ -7,12 +7,8 @@ resource "aws_security_group" "main" {
   egress = [
     {
       cidr_blocks      = [ "0.0.0.0/0", ]
-      description      = ""
       from_port        = 0
-      ipv6_cidr_blocks = []
-      prefix_list_ids  = []
       protocol         = "-1"
-      security_groups  = []
       self             = false
       to_port          = 0
     }
@@ -20,23 +16,15 @@ resource "aws_security_group" "main" {
  ingress                = [
    {
      cidr_blocks      = [ "0.0.0.0/0", ]
-     description      = ""
      from_port        = 22
-     ipv6_cidr_blocks = []
-     prefix_list_ids  = []
      protocol         = "tcp"
-     security_groups  = []
      self             = false
      to_port          = 22
   },
      {
      cidr_blocks      = [ "0.0.0.0/0", ]
-     description      = ""
      from_port        = 3001
-     ipv6_cidr_blocks = []
-     prefix_list_ids  = []
      protocol         = "tcp"
-     security_groups  = []
      self             = false
      to_port          = 3001
   }
@@ -60,9 +48,9 @@ resource "aws_key_pair" "key_pair" {
   }
 }
 
-resource "aws_instance" "test_instance" {
+resource "aws_instance" "main_instance" {
   tags = {
-      Name = "Terraform Test"
+      Name = "Catalogue-GraphQL"
   }
   ami = "ami-0015a39e4b7c0966f"
   instance_type = "t2.micro"
@@ -71,12 +59,12 @@ resource "aws_instance" "test_instance" {
   user_data = "${file("init.sh")}"
 }
 
-output "ec2_ssh_address" {
+output "ec2_ssh_command" {
   description = "EC2 SSH Address"
-  value = "ubuntu@${aws_instance.test_instance.public_dns}"
+  value = "ssh -i ci/ec2key.pem ubuntu@${aws_instance.main_instance.public_dns}"
 }
 
-output "ec2_grpahql_endpoint" {
-  description = "GraphQL Web Endpoint"
-  value = "http://${aws_instance.test_instance.public_dns}:3001/graphql"
+output "ec2_grpahql_adress" {
+  description = "GraphQL Browser Adress"
+  value = "http://${aws_instance.main_instance.public_dns}:3001/graphql"
 }
