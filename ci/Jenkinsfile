@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'AWS_ACCESS_KEY', defaultValue: '', description: 'AWS access key.')
+        string(name: 'AWS_SECRET_ACCESS_KEY', defaultValue: '', description: 'AWS secret access key.')
+        booleanParam(name: 'SKIP_TESTS', defaultValue: false, description: 'Skip tests.')
+    }
+
     stages {
         stage('Build') {
             steps {
@@ -10,10 +16,15 @@ pipeline {
         }
 
         stage('Run Local Tests') {
+            when {
+                expression {
+                    !params.SKIP_TESTS
+                }
+            }
+
             steps {
                 echo 'Running unit tests...'
-                echo 'Skipping tests for now'
-                // sh 'npm test'
+                sh 'npm test'
             }
         }
 
@@ -21,6 +32,7 @@ pipeline {
             steps {
                 echo 'Deploying app to AWS...'
                 dir('deploy') {
+                    sh "echo '[default]\naws_access_key_id=${params.AWS_ACCESS_KEY}\naws_secret_access_key=${params.AWS_SECRET_ACCESS_KEY}' > credentials"
                     sh 'terraform init'
                     sh 'terraform apply -auto-approve'
                     sh 'terraform output > ../ci/buildOutputs.txt'
