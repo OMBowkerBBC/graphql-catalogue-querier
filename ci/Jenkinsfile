@@ -5,10 +5,32 @@ pipeline {
         string(name: 'AWS_ACCESS_KEY', defaultValue: '', description: 'AWS access key.')
         string(name: 'AWS_SECRET_ACCESS_KEY', defaultValue: '', description: 'AWS secret access key.')
         booleanParam(name: 'SKIP_TESTS', defaultValue: false, description: 'Skip tests.')
+        booleanParam(name: 'TEARDOWN', defaultValue: false, description: 'Tear down current infrastructure only.')
     }
 
     stages {
+        stage('TearDown') {
+            when {
+                expression {
+                    params.TEARDOWN
+                }
+            }
+
+            steps {
+                dir('deploy') {
+                    echo 'Tearing down current infrastructure...'
+                    sh 'terraform destroy -auto-approve'
+                }
+            }
+        }
+
         stage('Build') {
+            when {
+                expression {
+                    !params.TEARDOWN
+                }
+            }
+
             steps {
                 echo 'Building app...'
                 sh 'npm i'
@@ -18,7 +40,7 @@ pipeline {
         stage('Run Local Tests') {
             when {
                 expression {
-                    !params.SKIP_TESTS
+                    !params.SKIP_TESTS && !params.TEARDOWN
                 }
             }
 
@@ -29,6 +51,12 @@ pipeline {
         }
 
         stage('Terraform Deploy') {
+            when {
+                expression {
+                    !params.TEARDOWN
+                }
+            }   
+
             steps {
                 echo 'Deploying app to AWS...'
                 dir('deploy') {
@@ -37,11 +65,18 @@ pipeline {
                     sh 'terraform apply -auto-approve'
                     sh 'terraform output > ../ci/buildOutputs.txt'
                     sh 'rm -rf credentials'
+                    sh 'rm -rf ec2key.pem'
                 }
             }
         }
 
         stage('Health Check') {
+            when {
+                expression {
+                    !params.TEARDOWN
+                }
+            }
+
             steps {
                 echo 'Checking service availability...'
                 dir('ci') {
