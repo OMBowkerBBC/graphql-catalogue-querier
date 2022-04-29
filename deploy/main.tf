@@ -6,11 +6,15 @@ provider "aws" {
 resource "aws_security_group" "main" {
   egress = [
     {
-      cidr_blocks      = [ "0.0.0.0/0", ]
-      from_port        = 0
-      protocol         = "-1"
-      self             = false
-      to_port          = 0
+      cidr_blocks = [ "0.0.0.0/0", ]
+      from_port = 0
+      protocol = "-1"
+      self = false
+      to_port = 0
+      description = ""
+      ipv6_cidr_blocks = []
+      prefix_list_ids = []
+      security_groups = []
     }
   ]
  ingress                = [
@@ -20,6 +24,10 @@ resource "aws_security_group" "main" {
      protocol         = "tcp"
      self             = false
      to_port          = 22
+     description = ""
+     ipv6_cidr_blocks = []
+     prefix_list_ids = []
+     security_groups = []
   },
      {
      cidr_blocks      = [ "0.0.0.0/0", ]
@@ -27,6 +35,10 @@ resource "aws_security_group" "main" {
      protocol         = "tcp"
      self             = false
      to_port          = 3001
+     description = ""
+     ipv6_cidr_blocks = []
+     prefix_list_ids = []
+     security_groups = []
   }
   ]
 }
@@ -64,7 +76,7 @@ output "ec2_ssh_command" {
   value = "ssh -i ci/ec2key.pem ubuntu@${aws_instance.main_instance.public_dns}"
 }
 
-output "ec2_grpahql_adress" {
+output "ec2_health_address" {
   description = "GraphQL Browser Adress"
-  value = "http://${aws_instance.main_instance.public_dns}:3001/graphql"
+  value = "http://${aws_instance.main_instance.public_dns}:3001/health"
 }

@@ -9,7 +9,8 @@
     "test": "jest --colors",
     "infrastructure:build": "cd deploy/ && terraform apply && cd ../",
     "infrastructure:rebuild": "cd deploy/ && rm ec2key.pem && terraform apply && cd ../",
-    "infrastructure:teardown": "cd deploy/ && rm ec2key.pem && terraform destroy && cd ../"
+    "infrastructure:teardown": "cd deploy/ && rm ec2key.pem && terraform destroy && cd ../",
+    "pipeline": "cd ci/ && docker compose up -d && cd ../ && node openPipeline.js"
   },
   "keywords": [],
   "author": "Oliver Bowker",
@@ -29,6 +30,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-standard": "^5.0.0",
     "jest": "^27.5.1",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "open": "^8.4.0"
   }
 }

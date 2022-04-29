@@ -6,3 +6,4 @@ deploy/.terraform/
 terraform*
 credentials
 ec2key.pem
+buildOutputs.txt

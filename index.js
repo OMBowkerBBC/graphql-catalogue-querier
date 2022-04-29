@@ -4,6 +4,10 @@ const { resolvers } = require('./src/resolvers/Resolvers')
 const express = require('express')
 
 const app = express()
+app.get('/health', (req, res) => {
+  res.send('')
+})
+
 const server = new ApolloServer({ typeDefs, resolvers })
 
 server.start().then(res => {

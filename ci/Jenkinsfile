@@ -12,20 +12,29 @@ pipeline {
         stage('Run Local Tests') {
             steps {
                 echo 'Running unit tests...'
-                sh 'npm test'
+                echo 'Skipping tests for now'
+                // sh 'npm test'
             }
         }
 
         stage('Terraform Deploy') {
             steps {
                 echo 'Deploying app to AWS...'
-                sh 'terraform -v'
+                dir('deploy') {
+                    sh 'terraform init'
+                    sh 'terraform apply -auto-approve'
+                    sh 'terraform output > ../ci/buildOutputs.txt'
+                }
             }
         }
 
         stage('Health Check') {
             steps {
                 echo 'Checking service availability...'
+                dir('ci') {
+                    sh 'chmod +x healthCheck.sh'
+                    sh './healthCheck.sh'
+                }
             }
         }
     }
