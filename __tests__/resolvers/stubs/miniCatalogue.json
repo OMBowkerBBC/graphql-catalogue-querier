@@ -1,0 +1,44 @@
+{
+    "episode": [
+        {    
+            "pid": "m0010zwd",
+            "title": "Detling 17",
+            "member_of": {
+                "pid": "m0010k5c"
+            } 
+        },
+        {
+            "pid": "m0011w1z",
+            "title": "Shrewsbury 6",
+            "member_of": {
+              "pid": "m0010k5c"
+            }
+        },
+        {
+            "pid": "m0013w5g",
+            "title": "Newark 16",
+            "member_of": {
+                "pid": "m0010k5c"
+            }
+        },
+        {
+            "pid": "m000lwkp",
+            "title": "Lady Bird"
+        }
+    ],
+    "series": [
+        {
+            "pid": "m0010k5c",
+            "title": "Series 60",
+            "member_of": {
+                "pid": "b006nb9z"
+            }
+        }
+    ],
+    "brand": [
+        {
+            "pid": "b006nb9z",
+            "title": "Bargain Hunt"
+        }
+    ]
+}

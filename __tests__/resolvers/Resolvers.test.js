@@ -50,6 +50,10 @@ describe('Resolvers test suite', () => {
         expect(firstResult).not.toEqual(secondResult)
       })
 
+      it('should return all episodes if amount requested is greater than what\'s in the catalogue', () => {
+        expect(resolvers.Query.getNumberOfEpisodes('_', { amount: 100 }).length).toBe(4)
+      })
+
       it.each(['string', -1, true, undefined])('should return empty list for input %s', (data) => {
         expect(resolvers.Query.getNumberOfEpisodes('_', { amount: data }).length).toBe(0)
       })

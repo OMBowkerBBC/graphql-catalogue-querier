@@ -1,4 +1,6 @@
-const catalogue = process.env.ENVIRONMENT === 'DEV' ? require('../../data/v2FullCat.json') : require('../../data/v2Cat.json')
+const catalogue = process.env.ENVIRONMENT === 'DEV'
+  ? require('../../data/v2FullCat.json')
+  : require('../../__tests__/resolvers/stubs/miniCatalogue.json')
 const { queryResolver } = require('./QueryResolver')
 
 const pidErrorObject = (pid) => ({ error: `Could not find an episode with pid ${pid}` })
@@ -34,10 +36,16 @@ const resolvers = {
 
     getNumberOfEpisodes (parent, { amount }) {
       if (typeof (amount) !== 'number') return []
+      if (amount > catalogue.episode.length) return catalogue.episode
 
       const returnValue = []
+      const usedValues = []
       for (let i = 0; i < amount; i++) {
-        const index = Math.floor(Math.random() * catalogue.episode.length)
+        let index = -1
+        while (usedValues.includes(index) || index === -1) {
+          index = Math.floor(Math.random() * catalogue.episode.length)
+        }
+        usedValues.push(index)
         returnValue.push(catalogue.episode[index])
       }
       return returnValue
