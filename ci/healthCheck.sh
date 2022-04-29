@@ -9,12 +9,14 @@ fi
 attempts=0
 max_attempts=10
 
+echo "Giving time to deploy..."
+sleep 20
 echo "Trying to hit endpoint (${endpoint})..."
 
 while [ $attempts -lt $max_attempts ]
 do
     attempts=$((attempts+1))
-    sleep 5
+    sleep 10
 
     curl --max-time 3 "${endpoint}"
     if [ $? -eq 0 ]; then
