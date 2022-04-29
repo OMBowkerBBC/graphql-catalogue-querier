@@ -19,9 +19,7 @@ pipeline {
             steps {
                 dir('deploy') {
                     echo 'Tearing down current infrastructure...'
-                    sh "echo '[default]\naws_access_key_id=${params.AWS_ACCESS_KEY}\naws_secret_access_key=${params.AWS_SECRET_ACCESS_KEY}' > credentials"
                     sh 'terraform destroy -auto-approve'
-                    sh 'rm -rf credentials'
                 }
             }
         }
