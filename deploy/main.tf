@@ -1,7 +1,4 @@
-provider "aws" {
-  region = "eu-west-2"
-  shared_credentials_files = ["credentials"]
-}
+provider "aws" {}
 
 resource "aws_security_group" "main" {
   egress = [

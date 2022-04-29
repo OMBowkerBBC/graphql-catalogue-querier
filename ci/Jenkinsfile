@@ -8,6 +8,12 @@ pipeline {
         booleanParam(name: 'TEARDOWN', defaultValue: false, description: 'Tear down current infrastructure only.')
     }
 
+    environment {
+        AWS_ACCESS_KEY_ID = "${params.AWS_ACCESS_KEY}"
+        AWS_SECRET_ACCESS_KEY = "${params.AWS_SECRET_ACCESS_KEY}"
+        AWS_REGION = "eu-west-2"
+    }
+
     stages {
         stage('TearDown') {
             when {
@@ -60,11 +66,9 @@ pipeline {
             steps {
                 echo 'Deploying app to AWS...'
                 dir('deploy') {
-                    sh "echo '[default]\naws_access_key_id=${params.AWS_ACCESS_KEY}\naws_secret_access_key=${params.AWS_SECRET_ACCESS_KEY}' > credentials"
                     sh 'terraform init'
                     sh 'terraform apply -auto-approve'
                     sh 'terraform output > ../ci/buildOutputs.txt'
-                    sh 'rm -rf credentials'
                     sh 'rm -rf ec2key.pem'
                 }
             }
