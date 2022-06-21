@@ -1,4 +1,6 @@
-provider "aws" {}
+provider "aws" {
+  shared_credentials_files = [ "./credentials" ]
+}
 
 resource "aws_security_group" "main" {
   egress = [
@@ -61,7 +63,7 @@ resource "aws_instance" "main_instance" {
   tags = {
       Name = "Catalogue-GraphQL"
   }
-  ami = "ami-0015a39e4b7c0966f"
+  ami = "ami-0d75513e7706cf2d9"
   instance_type = "t2.micro"
   key_name = aws_key_pair.key_pair.key_name
   vpc_security_group_ids = [aws_security_group.main.id]
