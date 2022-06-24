@@ -16,14 +16,15 @@ May also be useful when creating stub data for tests.
 ![Testing](https://img.shields.io/badge/testing-in%20dev-green?logo=Jest)
 &ndash; [Jest](https://jestjs.io/) will be used to test the Apollo GraphQL app.
 
-![Infrastructure](https://img.shields.io/badge/infrastructure-soon-orange?logo=Terraform)
+![Infrastructure](https://img.shields.io/badge/infrastructure-in%20dev-green?logo=Terraform)
 &ndash; [Terraform](https://www.terraform.io/) will be used to provision and deploy infrastructure to AWS.
 
-![CI/CD](https://img.shields.io/badge/deployment-soon-orange?logo=Jenkins)
+![CI/CD](https://img.shields.io/badge/deployment-complete-brightgreen?logo=Jenkins)
 &ndash; [Jenkins](https://www.jenkins.io/) will be used for CI/CD.
 
-![Frontend](https://img.shields.io/badge/frontend-planned-inactive?logo=React)
-&ndash; I may add a user friendly [React](https://reactjs.org/) front end to the application so non-technical users can also use the tool.
+![Frontend](https://img.shields.io/badge/frontend-indev-green?logo=React)
+&ndash; I have added a user friendly [React](https://reactjs.org/) front end to the application so non-technical users can also use the tool.
+It can be found in this repository https://github.com/OMBowkerBBC/graphql-catalogue-querier-interface.
 
 #### Potential Scenarios
 The application currently has some very basic queries, but I am starting to develop more detailed ones.
